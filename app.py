@@ -38,6 +38,10 @@ st.markdown(
 
 @st.cache_data
 def load_dashboard_data():
+    if not DATA_PATH.is_file():
+        raise FileNotFoundError(
+            f"Dataset not found at {DATA_PATH}. Run Streamlit from the project with: streamlit run app.py"
+        )
     data = pd.read_csv(DATA_PATH)
     data["Order Date"] = pd.to_datetime(data["Order Date"])
     data["Ship Date"] = pd.to_datetime(data["Ship Date"])
@@ -51,7 +55,11 @@ def money(value):
 st.title("Superstore Sales Dashboard")
 st.caption("Explore sales performance, profitability, and the 12-month forecast.")
 
-df = load_dashboard_data()
+try:
+    df = load_dashboard_data()
+except FileNotFoundError as error:
+    st.error(str(error))
+    st.stop()
 
 with st.sidebar:
     st.header("Filters")
@@ -142,4 +150,7 @@ for row_start in range(0, len(image_specs), 2):
     for column, (filename, caption) in zip(columns, image_specs[row_start : row_start + 2]):
         image_path = IMAGE_DIR / filename
         with column:
-            st.image(str(image_path), caption=caption, use_container_width=True)
+            if image_path.is_file():
+                st.image(str(image_path), caption=caption, use_container_width=True)
+            else:
+                st.info(f"Image not found: {image_path}")
