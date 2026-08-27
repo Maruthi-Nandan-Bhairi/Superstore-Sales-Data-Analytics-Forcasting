@@ -12,6 +12,7 @@ superstore-sales-project/
 │   └── superstore.csv            # generated dataset (7,500+ rows)
 ├── superstore_analysis.py        # cleaning, feature engineering, EDA + charts
 ├── superstore_forecast.py        # monthly sales & profit time-series forecasting
+├── app.py                         # interactive Streamlit dashboard
 ├── img/                          # generated charts
 ├── requirements.txt
 └── TODO.md
@@ -28,6 +29,20 @@ python superstore_analysis.py
 # 3. Run forecasting (prints forecasts + error metrics, creates charts)
 python superstore_forecast.py
 ```
+
+## Run the dashboard
+
+The Streamlit dashboard includes interactive filters, KPI cards, summary charts,
+forecast tabs, and the generated analysis images.
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+For sharing, push this repository to GitHub and deploy `app.py` with
+[Streamlit Community Cloud](https://streamlit.io/cloud). The app expects
+`data/superstore.csv` and the charts in `img/` to remain in the repository.
 
 ## What it does
 - **Data cleaning**: drops missing/duplicate rows, coerces numeric types.
