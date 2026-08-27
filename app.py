@@ -40,7 +40,8 @@ st.markdown(
 def load_dashboard_data():
     if not DATA_PATH.is_file():
         raise FileNotFoundError(
-            f"Dataset not found at {DATA_PATH}. Run Streamlit from the project with: streamlit run app.py"
+            f"Dataset not found at {DATA_PATH}. Upload data/superstore.csv to the same GitHub repository "
+            "as app.py, then reboot the Streamlit app."
         )
     data = pd.read_csv(DATA_PATH)
     data["Order Date"] = pd.to_datetime(data["Order Date"])
